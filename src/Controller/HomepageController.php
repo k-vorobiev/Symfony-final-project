@@ -10,6 +10,6 @@ class HomepageController extends AbstractController
     #[Route('/', name: 'app_homepage')]
     public function homepage()
     {
-        return $this->render('base.html.twig');
+        return $this->render('pages/homepage.html.twig');
     }
 }
