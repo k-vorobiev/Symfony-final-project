@@ -65,8 +65,9 @@
             </div>
         </div>
     </div>
-
-    {% if app.current_route() == 'app_homepage' %}
-        {{ render(controller('App\\Controller\\BannerController::banner')) }}
-    {% endif %}
 </header>
+{% if app.current_route() == 'app_homepage' %}
+    {{ render(controller('App\\Controller\\BannerController::banner')) }}
+{% else %}
+    {% include 'components/partials/breadcrumbs.html.twig' %}
+{% endif %}
