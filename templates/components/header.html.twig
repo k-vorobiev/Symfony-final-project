@@ -17,7 +17,10 @@
                 </div>
                 <nav class="row-block">
                     <div class="row ControlPanel-rowSplit">
-                        <div class="row-block"><a class="ControlPanel-title" href="login.html">Войти</a>&nbsp;/&nbsp;<a class="ControlPanel-title" href="register.html">Регистрация</a>
+                        <div class="row-block">
+                            <a class="ControlPanel-title" href="{{ path('app_login') }}">Войти</a>
+                            &nbsp;/&nbsp;
+                            <a class="ControlPanel-title" href="{{ path('app_register') }}">Регистрация</a>
                         </div>
                     </div>
                 </nav>
