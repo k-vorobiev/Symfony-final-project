@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\VendorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VendorRepository::class)]
-class Vendor
+class Seller
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -31,6 +33,18 @@ class Vendor
 
     #[ORM\Column(length: 50)]
     private ?string $email = null;
+
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'seller')]
+    private Collection $products;
+
+    #[ORM\OneToMany(mappedBy: 'seller', targetEntity: Price::class)]
+    private Collection $prices;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+        $this->prices = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +119,64 @@ class Vendor
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->addSeller($this);
+        }
+
+        return $this;
+    }
+
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            $product->removeSeller($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Price>
+     */
+    public function getPrices(): Collection
+    {
+        return $this->prices;
+    }
+
+    public function addPrice(Price $price): self
+    {
+        if (!$this->prices->contains($price)) {
+            $this->prices->add($price);
+            $price->setSeller($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrice(Price $price): self
+    {
+        if ($this->prices->removeElement($price)) {
+            // set the owning side to null (unless already changed)
+            if ($price->getSeller() === $this) {
+                $price->setSeller(null);
+            }
+        }
 
         return $this;
     }

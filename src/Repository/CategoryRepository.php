@@ -49,6 +49,22 @@ class CategoryRepository extends ServiceEntityRepository
        ;
     }
 
+    public function findAllActiveCategoryProducts($slug)
+    {
+        return $this->createQueryBuilder('c')
+
+            ->leftJoin('c.products', 'p')
+            ->addSelect('p')
+            ->leftJoin('p.prices', 'pp')
+            ->addSelect('pp')
+            ->andWhere('p.isActive = 1')
+            ->andWhere('c.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 //    /**
 //     * @return Category[] Returns an array of Category objects
 //     */
