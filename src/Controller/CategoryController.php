@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\ProductRepository;
 use App\ServiceInterface\SettingServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,24 +13,27 @@ class CategoryController extends AbstractController
 {
     private CategoryRepository $categoryRepository;
     private SettingServiceInterface $settingService;
+    private ProductRepository $productRepository;
 
-    public function __construct(CategoryRepository $categoryRepository, SettingServiceInterface $settingService)
+    public function __construct(CategoryRepository $categoryRepository, ProductRepository $productRepository, SettingServiceInterface $settingService)
     {
         $this->categoryRepository = $categoryRepository;
         $this->settingService = $settingService;
+        $this->productRepository = $productRepository;
     }
 
     #[Route('/catalog/category/{slug}', name: 'app_category')]
     public function categoryPage($slug)
     {
-        $category = $this->categoryRepository->findAllActiveCategoryProducts($slug);
+        /** @var Category $category */
+        $category = $this->categoryRepository->findFilteredProducts($slug);
 
         if (!$category) {
             throw $this->createNotFoundException(sprintf('Категория: %s не найдена', $slug));
         }
 
         return $this->render('pages/catalog.html.twig', [
-            'title' => 'Каталог категории ' . $slug,
+            'title' => 'Каталог категории ' . $category->getName(),
             'products' => $category->getProducts(),
         ]);
     }

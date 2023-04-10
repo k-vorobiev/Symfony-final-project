@@ -62,30 +62,7 @@
                     <div class="Sort-variants"><a class="Sort-sortBy Sort-sortBy_dec" href="#">Популярности</a><a class="Sort-sortBy" href="#">Цене</a><a class="Sort-sortBy" href="#">Отзывам</a><a class="Sort-sortBy Sort-sortBy_inc" href="#">Новизне</a>
                     </div>
                 </div>
-                <div class="Cards">
-                    {% for product in products %}
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{{ product.imageUrl }}" alt="card image"/></a>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="product.html">{{ product.title }}</a>
-                                </strong>
-                                <div class="Card-description">
-                                    <div class="Card-cost">
-
-                                        <span class="Card-priceOld">$115.00</span><span class="Card-price">
-
-                                        </span>
-                                    </div>
-                                    <div class="Card-category">Games / xbox
-                                    </div>
-                                    <div class="Card-hover"><a class="Card-btn" href="#"><img src="assets/img/icons/card/bookmark.svg" alt="bookmark.svg"/></a><a class="Card-btn" href="#"><img src="assets/img/icons/card/cart.svg" alt="cart.svg"/></a><a class="Card-btn" href="#"><img src="assets/img/icons/card/change.svg" alt="change.svg"/></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="Card-sale">-60%
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+                {{ include('pages/partials/products.html.twig') }}
                 <div class="Pagination">
                     <div class="Pagination-ins"><a class="Pagination-element Pagination-element_prev" href="#"><img src="assets/img/icons/prevPagination.svg" alt="prevPagination.svg"/></a><a class="Pagination-element Pagination-element_current" href="#"><span class="Pagination-text">1</span></a><a class="Pagination-element" href="#"><span class="Pagination-text">2</span></a><a class="Pagination-element" href="#"><span class="Pagination-text">3</span></a><a class="Pagination-element Pagination-element_prev" href="#"><img src="assets/img/icons/nextPagination.svg" alt="nextPagination.svg"/></a>
                     </div>

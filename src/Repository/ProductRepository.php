@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Entity\Seller;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,47 @@ class ProductRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findFilteredProducts(?array $filter, ?string $category = null)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.prices', 'pp')
+            ->addSelect('pp')
+            ->andWhere('pp.value IS NOT NULL')
+            ->andWhere('pp.value > 0')
+        ;
+
+        if (isset($category) && !empty($category)) {
+
+            $qb->andWhere('p.category = :category')
+                ->setParameter('category', $category);
+            ;
+        }
+
+        if (isset($filter['title']) && !empty($filter['title'])) {
+            $title = $filter['title'];
+
+            $qb->andWhere('p.title LIKE :title')
+                ->setParameter('title', "%$title%")
+            ;
+        }
+
+        if (isset($filter['seller']) && !empty($filter['seller'])) {
+            $seller = $filter['seller'];
+
+            $qb->innerJoin('p.seller', 's')
+                ->addSelect('s')
+                ->andWhere('s.name = :seller')
+                ->setParameter('seller', $seller)
+            ;
+        }
+
+        $qb->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $qb;
     }
 
 //    /**

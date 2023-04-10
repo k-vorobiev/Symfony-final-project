@@ -1,0 +1,35 @@
+<div class="Cards">
+    {% for product in products %}
+        <div class="Card"><a class="Card-picture" href="#"><img src="{{ product.imageUrl }}" alt="card image"/></a>
+            <div class="Card-content">
+                <strong class="Card-title"><a href="product.html">{{ product.title }}</a>
+                </strong>
+                <div class="Card-description">
+                    <div class="Card-cost">
+                        {% set showDiscontPrice = 0 %}
+                        {% for price in product.prices %}
+                            {% if price.discontValue %}
+                                {% set showDiscontPrice = 1 %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if (showDiscontPrice == 1) and (product.prices | minPrice > product.prices | minPriceDiscont) %}
+                            <span class="Card-priceOld">${{ product.prices | minPrice }}</span>
+                            <span class="Card-price">${{ product.prices | minPriceDiscont }}</span>
+                        {% else %}
+                            <span class="Card-price">${{ product.prices | minPrice }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="Card-category">{{ product.category.name }}</div>
+                    <div class="Card-hover">
+                        <a class="Card-btn" href="#"><img src="{{ asset('images/icons/card/bookmark.svg') }}" alt="bookmark.svg"/></a>
+                        <a class="Card-btn" href="#"><img src="{{ asset('images/icons/card/cart.svg') }}" alt="cart.svg"/></a>
+                        <a class="Card-btn" href="#"><img src="{{ asset('images/icons/card/change.svg') }}" alt="change.svg"/></a>
+                    </div>
+                </div>
+            </div>
+            <div class="Card-sale">-60%
+            </div>
+        </div>
+    {% endfor %}
+</div>
