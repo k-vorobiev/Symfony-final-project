@@ -40,19 +40,37 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
-    public function findFilteredProducts(?array $filter, ?string $category = null)
+    public function findTopProducts()
     {
         $qb = $this->createQueryBuilder('p')
-            ->leftJoin('p.prices', 'pp')
+            ->andWhere('p.sortIndex IS NOT NULL')
+            ->innerJoin('p.prices', 'pp')
             ->addSelect('pp')
+            ->andWhere('pp.value IS NOT NULL')
+            ->andWhere('pp.value > 0')
+            ->addOrderBy('p.sortIndex', 'ASC')
+            ->setMaxResults(9)
+        ;
+
+        return $qb->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findFilteredProducts(?array $filter, $category = null)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.prices', 'pp')
+            ->innerJoin('p.seller', 's')
+            ->addSelect('pp')
+            ->addSelect('s')
             ->andWhere('pp.value IS NOT NULL')
             ->andWhere('pp.value > 0')
         ;
 
         if (isset($category) && !empty($category)) {
-
-            $qb->andWhere('p.category = :category')
-                ->setParameter('category', $category);
+            $qb->andWhere('p.category = :category_id')
+                ->setParameter('category_id', $category)
             ;
         }
 
@@ -67,16 +85,31 @@ class ProductRepository extends ServiceEntityRepository
         if (isset($filter['seller']) && !empty($filter['seller'])) {
             $seller = $filter['seller'];
 
-            $qb->innerJoin('p.seller', 's')
-                ->addSelect('s')
-                ->andWhere('s.name = :seller')
+            $qb->andWhere('s.id = :seller')
                 ->setParameter('seller', $seller)
             ;
         }
 
-        $qb->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if ((isset($filter['price_from']) && !empty($filter['price_from'])) && isset($filter['price_to']) && !empty($filter['price_to'])) {
+            $qb->andWhere('pp.value BETWEEN :price_from AND :price_to')
+                ->setParameter('price_from', $filter['price_from'])
+                ->setParameter('price_to', $filter['price_to'])
+            ;
+        }
+
+        if (!empty($filter['popular_sort'])) {
+            $qb->addOrderBy('RAND()');
+        }
+
+        if (!empty($filter['price_sort'])) {
+            $priceSort = $filter['price_sort'];
+
+            if ($priceSort == 'increase') {
+                $qb->addOrderBy('pp.value', 'ASC');
+            } else {
+                $qb->addOrderBy('pp.value', 'DESC');
+            }
+        }
 
         return $qb;
     }

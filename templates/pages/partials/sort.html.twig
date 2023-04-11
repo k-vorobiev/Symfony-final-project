@@ -1,0 +1,31 @@
+{% if app.request.get('popular_sort') == 'increase' %}
+    <a class="Sort-sortBy Sort-sortBy_dec" href="{{ app.request.pathinfo ~ '?popular_sort=decrease' }}">Популярности</a>
+{% elseif app.request.get('popular_sort') == 'decrease' %}
+    <a class="Sort-sortBy Sort-sortBy_inc" href="{{ app.request.pathinfo ~ '?popular_sort=increase' }}">Популярности</a>
+{% else %}
+    <a class="Sort-sortBy" href="{{ app.request.pathinfo ~ '?popular_sort=increase' }}">Популярности</a>
+{% endif %}
+
+{% if app.request.get('price_sort') == 'increase' %}
+    <a class="Sort-sortBy Sort-sortBy_dec" href="{{ app.request.pathinfo ~ '?price_sort=decrease' }}">Цене</a>
+{% elseif app.request.get('price_sort') == 'decrease' %}
+    <a class="Sort-sortBy Sort-sortBy_inc" href="{{ app.request.pathinfo ~ '?price_sort=increase' }}">Цене</a>
+{% else %}
+    <a class="Sort-sortBy" href="{{ app.request.pathinfo ~ '?price_sort=increase' }}">Цене</a>
+{% endif %}
+
+{% if app.request.get('review_sort') == 'increase' %}
+    <a class="Sort-sortBy Sort-sortBy_dec" href="{{ app.request.pathinfo ~ '?review_sort=decrease' }}">Отзывам</a>
+{% elseif app.request.get('review_sort') == 'decrease' %}
+    <a class="Sort-sortBy Sort-sortBy_inc" href="{{ app.request.pathinfo ~ '?review_sort=increase' }}">Отзывам</a>
+{% else %}
+    <a class="Sort-sortBy" href="{{ app.request.pathinfo ~ '?review_sort=increase' }}">Отзывам</a>
+{% endif %}
+
+{% if app.request.get('date_sort') == 'increace' %}
+    <a class="Sort-sortBy Sort-sortBy_dec" href="{{ app.request.pathinfo ~ '?date_sort=decrease' }}">Новизне</a>
+{% elseif app.request.get('date_sort') == 'decrease' %}
+    <a class="Sort-sortBy Sort-sortBy_inc" href="{{ app.request.pathinfo ~ '?date_sort=increase' }}">Новизне</a>
+{% else %}
+    <a class="Sort-sortBy" href="{{ app.request.pathinfo ~ '?date_sort=increase' }}">Новизне</a>
+{% endif %}

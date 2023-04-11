@@ -12,7 +12,7 @@ class MinPriceExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('minPrice', [MinPriceExtensionRuntime::class, 'getMin']),
+            new TwigFilter('middlePrice', [MinPriceExtensionRuntime::class, 'getMiddlePrice']),
         ];
     }
 }

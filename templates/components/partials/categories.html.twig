@@ -9,7 +9,7 @@
             {% if categories is not empty %}
                 {% for category in categories %}
                     <div class="CategoriesButton-link">
-                        <a href="{{ path('app_category', {slug: category.slug} ) }}">
+                        <a href="{{ path('app_category', {id: category.id} ) }}">
                             <div class="CategoriesButton-icon"><img src="{{ asset(category.imageUrl) }}" alt="1.svg"/></div>
                             <span class="CategoriesButton-text">{{ category.name }}</span>
                         </a>

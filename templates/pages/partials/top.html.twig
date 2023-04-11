@@ -1,0 +1,23 @@
+{% if products %}
+<div class="Cards">
+    {% for product in products %}
+        <div class="Card"><a class="Card-picture" href="#"><img src="{{ product.imageUrl }}" alt="card.jpg"/></a>
+            <div class="Card-content">
+                <strong class="Card-title"><a href="#">{{ product.title }}</a>
+                </strong>
+                <div class="Card-description">
+                    <div class="Card-cost">
+                        <span class="Card-price">${{ product.prices | middlePrice }}</span>
+                    </div>
+                    <div class="Card-category">{{ product.category.name }}
+                    </div>
+                    <div class="Card-hover"><a class="Card-btn" href="#"><img src="{{ asset('images/icons/card/bookmark.svg') }}" alt="bookmark.svg"/></a><a class="Card-btn" href="#"><img src="{{ asset('images/icons/card/cart.svg') }}" alt="cart.svg"/></a><a class="Card-btn" href="compare.html"><img src="{{ asset('images/icons/card/change.svg') }}" alt="change.svg"/></a>
+                    </div>
+                </div>
+            </div>
+            <div class="Card-sale">-60%
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}

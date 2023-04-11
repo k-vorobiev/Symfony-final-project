@@ -12,34 +12,17 @@ class MinPriceExtensionRuntime implements RuntimeExtensionInterface
         // Inject dependencies if needed
     }
 
-    public function getMin($value)
+    public function getMiddlePrice($value)
     {
-        $min = PHP_INT_MAX;
+        $all = [];
         $prices = $value->toArray();
 
-        /** @var Price $price */
         foreach ($prices as $price) {
-            if ($min > $price->getValue()) {
-                $min = $price->getValue();
-            }
+            $all[] = $price->getValue();
         }
+        sort($all);
+        $count = count($all) - 1;
 
-        return $min;
-    }
-
-    public function getMinDiscont($value)
-    {
-        $min = PHP_INT_MAX;
-        $prices = $value->toArray();
-
-        /** @var Price $price */
-        foreach ( $prices as $price) {
-            $currentDiscontPrice = $price->getDiscontValue();
-            if (isset($currentDiscontPrice) && $min > $currentDiscontPrice) {
-                $min = $currentDiscontPrice;
-            }
-        }
-
-        return $min;
+        return $all[$count];
     }
 }

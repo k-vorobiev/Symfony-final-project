@@ -22,6 +22,7 @@ class ProductFixtures extends BaseFixtures implements DependentFixtureInterface
                ->setDescription($this->faker->realText(1000))
                ->setImageUrl($this->faker->randomElement(self::$productImages))
                ->setCategory($this->getRandomReference(Category::class))
+               ->setSortIndex($this->faker->numberBetween(1, 50))
            ;
 
            if ($this->faker->boolean(30)) {

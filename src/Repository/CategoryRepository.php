@@ -49,62 +49,6 @@ class CategoryRepository extends ServiceEntityRepository
        ;
     }
 
-    public function findFilteredProducts(?string $slug, ?array $filter = null)
-    {
-        $qb = $this->createQueryBuilder('c')
-            ->leftJoin('c.products', 'p')
-            ->addSelect('p')
-            ->leftJoin('p.prices', 'pp')
-            ->addSelect('pp')
-            ->andWhere('p.isActive = 1')
-            ->andWhere('pp.value IS NOT NULL')
-            ->andWhere('pp.value > 0')
-        ;
-
-        if (isset($slug) && !empty($slug)) {
-            $qb->andWhere('c.slug = :slug')
-                ->setParameter('slug', $slug)
-            ;
-        }
-
-        if (isset($filter['title']) && !empty($filter['title'])) {
-            $title = $filter['title'];
-
-            $qb->andWhere('p.title LIKE :title')
-                ->setParameter('title', "%$title%")
-            ;
-        }
-
-        if (isset($filter['seller']) && !empty($filter['seller'])) {
-            $seller = $filter['seller'];
-
-            $qb->innerJoin('p.seller', 's')
-                ->addSelect('s')
-                ->andWhere('s.name = :seller')
-                ->setParameter('seller', $seller)
-            ;
-        }
-
-        return  $qb->getQuery()
-            ->getOneOrNullResult()
-        ;
-
-
-        return $this->createQueryBuilder('c')
-
-            ->leftJoin('c.products', 'p')
-            ->addSelect('p')
-            ->leftJoin('p.prices', 'pp')
-            ->addSelect('pp')
-            ->andWhere('p.isActive = 1')
-            ->andWhere('c.slug = :slug')
-            ->andWhere('pp.value IS NOT NULL')
-            ->setParameter('slug', $slug)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-
 //    /**
 //     * @return Category[] Returns an array of Category objects
 //     */

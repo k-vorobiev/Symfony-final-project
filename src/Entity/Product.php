@@ -46,6 +46,9 @@ class Product
     #[ORM\Column]
     private ?bool $isActive = true;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $sortIndex = null;
+
     public function __construct()
     {
         $this->seller = new ArrayCollection();
@@ -191,6 +194,18 @@ class Product
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getSortIndex(): ?int
+    {
+        return $this->sortIndex;
+    }
+
+    public function setSortIndex(?int $sortIndex): self
+    {
+        $this->sortIndex = $sortIndex;
 
         return $this;
     }
