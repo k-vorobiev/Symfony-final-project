@@ -4,7 +4,7 @@
             <div class="row ControlPanel-row">
                 <div class="row-block">
                     <div class="row ControlPanel-rowSplit">
-                        <div class="row-block"><a class="ControlPanel-title" href="sale.html">Скидки</a>
+                        <div class="row-block"><a class="ControlPanel-title" href="{{ path('app_discount') }}">Скидки</a>
                         </div>
                         <div class="row-block hide_700"><span class="ControlPanel-title">Мы в соцсетях</span>
                             <ul class="menu menu_img menu_smallImg ControlPanel-menu">
@@ -18,9 +18,13 @@
                 <nav class="row-block">
                     <div class="row ControlPanel-rowSplit">
                         <div class="row-block">
+                            {% if not app.user %}
                             <a class="ControlPanel-title" href="{{ path('app_login') }}">Войти</a>
                             &nbsp;/&nbsp;
                             <a class="ControlPanel-title" href="{{ path('app_register') }}">Регистрация</a>
+                            {% else %}
+                                <a class="ControlPanel-title" href="{{ path('app_account') }}">Личный кабинет</a>
+                            {% endif %}
                         </div>
                     </div>
                 </nav>
