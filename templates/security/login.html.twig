@@ -3,6 +3,7 @@
 {% block title %}Авторизация{% endblock %}
 
 {% block content %}
+    {{ include('components/partials/breadcrumbs.html.twig', {page_title: 'Авторизация'}) }}
     <div class="Section">
         <div class="wrap">
             {% if not app.user %}

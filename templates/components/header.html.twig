@@ -36,13 +36,21 @@
                     <ul class="menu menu_main">
                         <li class="menu-item"><a class="menu-link" href="{{ path('app_homepage') }}">Главная</a></li>
                         <li class="menu-item"><span class="menu-label menu-label_danger">Hot</span><a class="menu-link" href="{{ path('app_catalog') }}">Каталог</a></li>
-                        <li class="menu-item"><span class="menu-label menu-label_success">New</span><a class="menu-link" href="sale.html">Скидки</a></li>
-                        <li class="menu-item"><a class="menu-link" href="contacts.html">Контакты</a></li>
+                        <li class="menu-item"><span class="menu-label menu-label_success">New</span><a class="menu-link" href="{{ path('app_discount') }}">Скидки</a></li>
+                        <li class="menu-item"><a class="menu-link" href="{{ path('app_contact') }}">Контакты</a></li>
                     </ul>
                 </div>
             </nav>
             <div class="row-block">
-                <div class="CartBlock"><a class="CartBlock-block" href="compare.html"><img class="CartBlock-img" src="{{ asset('images/icons/exchange.svg') }}" alt="exchange.svg"/><span class="CartBlock-amount">4</span></a><a class="CartBlock-block" href="cart.html"><img class="CartBlock-img" src="{{ asset('images/icons/cart.svg') }}" alt="cart.svg"/><span class="CartBlock-amount">0</span></a>
+                <div class="CartBlock">
+                    <a class="CartBlock-block" href="{{ path('app_compare') }}">
+                        <img class="CartBlock-img" src="{{ asset('images/icons/exchange.svg') }}" alt="exchange.svg"/>
+                        <span class="CartBlock-amount">4</span>
+                    </a>
+                    <a class="CartBlock-block" href="{{ path('app_cart') }}">
+                        <img class="CartBlock-img" src="{{ asset('images/icons/cart.svg') }}" alt="cart.svg"/>
+                        <span class="CartBlock-amount">0</span>
+                    </a>
                     <div class="CartBlock-block"><span class="CartBlock-price">0.00$</span>
                     </div>
                 </div>
@@ -71,6 +79,4 @@
 </header>
 {% if app.current_route() == 'app_homepage' %}
     {{ render(controller('App\\Controller\\BannerController::banner')) }}
-{% else %}
-    {% include 'components/partials/breadcrumbs.html.twig' %}
 {% endif %}

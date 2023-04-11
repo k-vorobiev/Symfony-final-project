@@ -3,6 +3,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
+    {{ include('components/partials/breadcrumbs.html.twig', {page_title: 'Каталог'}) }}
     <div class="Section Section_column Section_columnLeft">
         <div class="wrap">
             {{ include('pages/partials/filter.html.twig') }}
