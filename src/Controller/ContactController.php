@@ -13,4 +13,10 @@ class ContactController extends AbstractController
     {
         return $this->render('static/contact.html.twig');
     }
+
+    #[Route('/about-us', name: 'app_aboutus')]
+    public function aboutUs(): Response
+    {
+        return $this->render('static/about_us.html.twig');
+    }
 }

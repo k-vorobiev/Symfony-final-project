@@ -76,6 +76,18 @@ class CatalogController extends AbstractController
         ]);
     }
 
+    #[Route('/catalog/details/{id}', name: 'app_product_details')]
+    public function productDetail($id)
+    {
+        $product = $this->productRepository->findProduct($id);
+        $sellers = $this->sellerRepository->findByProductId($id);
+
+        return $this->render('pages/details.html.twig', [
+            'product' => $product,
+            'sellers' => $sellers,
+        ]);
+    }
+
     public function category()
     {
         $categoryCacheLifetime = $this->settingService->get('app.category_cache_lifetime');

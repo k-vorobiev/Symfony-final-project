@@ -16,8 +16,8 @@ class ProductFixtures extends BaseFixtures implements DependentFixtureInterface
 
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Product::class, 30, function (Product $product) use ($manager) {
-           $product->setTitle($this->faker->title)
+        $this->createMany(Product::class, 100, function (Product $product) use ($manager) {
+           $product->setTitle($this->faker->realText(30))
                ->setShortDescription($this->faker->realText(100))
                ->setDescription($this->faker->realText(1000))
                ->setImageUrl($this->faker->randomElement(self::$productImages))

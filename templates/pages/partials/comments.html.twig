@@ -1,0 +1,20 @@
+{% if comments is not empty %}
+    {% for comment in comments %}
+        <div class="Comment">
+            <div class="Comment-column Comment-column_pict">
+                <div class="Comment-avatar"></div>
+            </div>
+            <div class="Comment-column">
+                <header class="Comment-header">
+                    <div>
+                        <strong class="Comment-title">{{ comment.name }}</strong>
+                    </div>
+                </header>
+                <div class="Comment-content">{{ comment.body }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Комментариев к данному продукту нет</p>
+{% endif %}

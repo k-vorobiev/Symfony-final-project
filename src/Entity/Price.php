@@ -16,9 +16,6 @@ class Price
     #[ORM\Column(length: 30)]
     private ?string $value = null;
 
-    #[ORM\Column(length: 30, nullable: true)]
-    private ?string $discontValue = null;
-
     #[ORM\ManyToOne(inversedBy: 'prices')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
@@ -26,6 +23,11 @@ class Price
     #[ORM\ManyToOne(inversedBy: 'prices')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Seller $seller = null;
+
+    public function __toString()
+    {
+        return $this->value;
+    }
 
     public function getId(): ?int
     {
@@ -40,18 +42,6 @@ class Price
     public function setValue(string $value): self
     {
         $this->value = $value;
-
-        return $this;
-    }
-
-    public function getDiscontValue(): ?string
-    {
-        return $this->discontValue;
-    }
-
-    public function setDiscontValue(?string $discontValue): self
-    {
-        $this->discontValue = $discontValue;
 
         return $this;
     }

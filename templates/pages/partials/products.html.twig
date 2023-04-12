@@ -8,9 +8,9 @@
         </form>
         <div class="Cards">
             {% for product in products %}
-                <div class="Card"><a class="Card-picture" href="#"><img src="{{ product.imageUrl }}" alt="card image"/></a>
+                <div class="Card"><a class="Card-picture" href="{{ path('app_product_details', {id: product.id}) }}"><img src="{{ asset(product.imageUrl) }}" alt="card image"/></a>
                     <div class="Card-content">
-                        <strong class="Card-title"><a href="product.html">{{ product.title }}</a>
+                        <strong class="Card-title"><a href="{{ path('app_product_details', {id: product.id}) }}">{{ product.title }}</a>
                         </strong>
                         <div class="Card-description">
                             <div class="Card-cost">

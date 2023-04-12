@@ -13,15 +13,8 @@ class PriceFixtures extends BaseFixtures implements DependentFixtureInterface
 {
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Price::class, 40, function (Price $price) use ($manager) {
-            $price->setValue($this->faker->randomDigit);
-
-            if ($this->faker->boolean(30)) {
-                if ($price->getValue() > 300) {
-                    $price->setDiscontValue($price->getValue() - 250);
-                }
-            }
-
+        $this->createMany(Price::class, 800, function (Price $price) use ($manager) {
+            $price->setValue($this->faker->numberBetween(120, 800));
             $price->setSeller($this->getRandomReference(Seller::class));
             $price->setProduct($this->getRandomReference(Product::class));
         });

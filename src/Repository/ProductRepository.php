@@ -40,6 +40,22 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    public function findProduct($id)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :id')
+            ->setParameter('id', $id)
+            ->innerJoin('p.seller', 's')
+            ->innerJoin('p.prices', 'pp')
+            ->addSelect('s')
+            ->addSelect('pp')
+            ->andWhere('pp.value IS NOT NULL')
+            ->andWhere('pp.value > 0')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     public function findTopProducts()
     {
         $qb = $this->createQueryBuilder('p')
@@ -66,6 +82,7 @@ class ProductRepository extends ServiceEntityRepository
             ->addSelect('s')
             ->andWhere('pp.value IS NOT NULL')
             ->andWhere('pp.value > 0')
+            ->addOrderBy('pp.value', 'ASC')
         ;
 
         if (isset($category) && !empty($category)) {
@@ -98,16 +115,26 @@ class ProductRepository extends ServiceEntityRepository
         }
 
         if (!empty($filter['popular_sort'])) {
-            $qb->addOrderBy('RAND()');
+            $qb->OrderBy('RAND()');
         }
 
         if (!empty($filter['price_sort'])) {
             $priceSort = $filter['price_sort'];
 
             if ($priceSort == 'increase') {
-                $qb->addOrderBy('pp.value', 'ASC');
+                $qb->OrderBy('pp.value', 'ASC');
             } else {
-                $qb->addOrderBy('pp.value', 'DESC');
+                $qb->OrderBy('pp.value', 'DESC');
+            }
+        }
+
+        if (!empty($filter['date_sort'])) {
+            $dateSort = $filter['date_sort'];
+
+            if ($dateSort == 'increase') {
+                $qb->OrderBy('p.createdAt', 'ASC');
+            } else {
+                $qb->OrderBy('p.createdAt', 'DESC');
             }
         }
 

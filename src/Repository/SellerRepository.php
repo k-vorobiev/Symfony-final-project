@@ -39,6 +39,19 @@ class SellerRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByProductId($productId)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin('s.prices', 'p')
+            ->addSelect('p')
+            ->andWhere('p.product = :id')
+            ->setParameter('id', $productId)
+            ->orderBy('p.value', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Vendor[] Returns an array of Vendor objects
 //     */

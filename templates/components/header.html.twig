@@ -72,8 +72,8 @@
             </div>
             <div class="Header-search">
                 <div class="search">
-                    <form class="form form_search" action="#" method="post">
-                        <input class="search-input" id="query" name="query" type="text" placeholder="Найти..."/>
+                    <form class="form form_search" action="{{ path('app_catalog') }}" method="get">
+                        <input class="search-input" id="query" name="title" type="text" placeholder="Найти..."/>
                         <button class="search-button" type="submit" name="search" id="search"><img src="{{ asset('images/icons/search.svg') }}" alt="search.svg"/>Поиск</button>
                     </form>
                 </div>

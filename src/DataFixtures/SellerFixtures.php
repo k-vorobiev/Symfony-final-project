@@ -15,7 +15,7 @@ class SellerFixtures extends BaseFixtures
 
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Seller::class, 10, function (Seller $seller) use ($manager) {
+        $this->createMany(Seller::class, 30, function (Seller $seller) use ($manager) {
             $seller->setName($this->faker->company)
                 ->setDescription($this->faker->realText(500))
                 ->setImageUrl($this->faker->randomElement(self::$sellerImages))

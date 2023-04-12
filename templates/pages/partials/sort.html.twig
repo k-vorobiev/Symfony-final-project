@@ -22,7 +22,7 @@
     <a class="Sort-sortBy" href="{{ app.request.pathinfo ~ '?review_sort=increase' }}">Отзывам</a>
 {% endif %}
 
-{% if app.request.get('date_sort') == 'increace' %}
+{% if app.request.get('date_sort') == 'increase' %}
     <a class="Sort-sortBy Sort-sortBy_dec" href="{{ app.request.pathinfo ~ '?date_sort=decrease' }}">Новизне</a>
 {% elseif app.request.get('date_sort') == 'decrease' %}
     <a class="Sort-sortBy Sort-sortBy_inc" href="{{ app.request.pathinfo ~ '?date_sort=increase' }}">Новизне</a>
