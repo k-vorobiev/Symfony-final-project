@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Отправка письма для сброса пароля{% endblock %}
+
+{% block content %}
+    <div class="Section">
+        <div class="wrap" style="max-width: 500px; margin: 20px auto">
+            <p>
+                Если Ваша почта была указана верно, Вам придет сообщение
+                Эта ссылка доступна ещё {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+            </p>
+            <p>Если вы не получили письмо, проверьте папку "Спам" или <a href="{{ path('app_forgot_password_request') }}">попробуйте позже</a>.</p>
+        </div>
+    </div>
+{% endblock %}
