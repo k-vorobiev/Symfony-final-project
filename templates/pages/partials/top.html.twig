@@ -1,17 +1,17 @@
 {% if products %}
 <div class="Cards">
     {% for product in products %}
-        <div class="Card"><a class="Card-picture" href="#"><img src="{{ product.imageUrl }}" alt="card.jpg"/></a>
+        <div class="Card"><a class="Card-picture" href="{{ path('app_product_details', {id: product.id}) }}"><img src="{{ product.imageUrl }}" alt="card.jpg"/></a>
             <div class="Card-content">
-                <strong class="Card-title"><a href="#">{{ product.title }}</a>
+                <strong class="Card-title"><a href="{{ path('app_product_details', {id: product.id}) }}">{{ product.title }}</a>
                 </strong>
                 <div class="Card-description">
                     <div class="Card-cost">
-                        <span class="Card-price">${{ product.prices | middlePrice }}</span>
+                        <span class="Card-price">${{ product.prices.getValues() | average_price }}</span>
                     </div>
                     <div class="Card-category">{{ product.category.name }}
                     </div>
-                    <div class="Card-hover"><a class="Card-btn" href="#"><img src="{{ asset('images/icons/card/bookmark.svg') }}" alt="bookmark.svg"/></a><a class="Card-btn" href="#"><img src="{{ asset('images/icons/card/cart.svg') }}" alt="cart.svg"/></a><a class="Card-btn" href="compare.html"><img src="{{ asset('images/icons/card/change.svg') }}" alt="change.svg"/></a>
+                    <div class="Card-hover"><a class="Card-btn" href="#"><img src="{{ asset('images/icons/card/bookmark.svg') }}" alt="bookmark.svg"/></a><a class="Card-btn" href="#"><img src="{{ asset('images/icons/card/cart.svg') }}" alt="cart.svg"/></a><a class="Card-btn" href="{{ path('app_compare') }}"><img src="{{ asset('images/icons/card/change.svg') }}" alt="change.svg"/></a>
                     </div>
                 </div>
             </div>

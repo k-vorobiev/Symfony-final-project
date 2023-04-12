@@ -39,19 +39,5 @@ final class Version20230412001435 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE feedback DROP FOREIGN KEY FK_D22944584584665A');
-        $this->addSql('ALTER TABLE price DROP FOREIGN KEY FK_CAC822D94584665A');
-        $this->addSql('ALTER TABLE price DROP FOREIGN KEY FK_CAC822D98DE820D9');
-        $this->addSql('ALTER TABLE product DROP FOREIGN KEY FK_D34A04AD12469DE2');
-        $this->addSql('ALTER TABLE product_seller DROP FOREIGN KEY FK_996692584584665A');
-        $this->addSql('ALTER TABLE product_seller DROP FOREIGN KEY FK_996692588DE820D9');
-        $this->addSql('DROP TABLE banner');
-        $this->addSql('DROP TABLE category');
-        $this->addSql('DROP TABLE feedback');
-        $this->addSql('DROP TABLE price');
-        $this->addSql('DROP TABLE product');
-        $this->addSql('DROP TABLE product_seller');
-        $this->addSql('DROP TABLE seller');
-        $this->addSql('DROP TABLE user');
     }
 }

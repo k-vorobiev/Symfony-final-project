@@ -8,6 +8,7 @@
                 <header class="Comment-header">
                     <div>
                         <strong class="Comment-title">{{ comment.name }}</strong>
+                        <span class="Comment-date">{{ comment.createdAt | date }}</span>
                     </div>
                 </header>
                 <div class="Comment-content">{{ comment.body }}

@@ -51,6 +51,7 @@ class ProductRepository extends ServiceEntityRepository
             ->addSelect('pp')
             ->andWhere('pp.value IS NOT NULL')
             ->andWhere('pp.value > 0')
+            ->addOrderBy('pp.value', 'ASC')
             ->getQuery()
             ->getOneOrNullResult()
         ;
@@ -58,17 +59,11 @@ class ProductRepository extends ServiceEntityRepository
 
     public function findTopProducts()
     {
-        $qb = $this->createQueryBuilder('p')
-            ->andWhere('p.sortIndex IS NOT NULL')
-            ->innerJoin('p.prices', 'pp')
-            ->addSelect('pp')
-            ->andWhere('pp.value IS NOT NULL')
-            ->andWhere('pp.value > 0')
-            ->addOrderBy('p.sortIndex', 'ASC')
-            ->setMaxResults(9)
-        ;
-
-        return $qb->getQuery()
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.isActive = 1')
+            ->setMaxResults(8)
+            ->orderBy('p.sortIndex', 'DESC')
+            ->getQuery()
             ->getResult()
         ;
     }

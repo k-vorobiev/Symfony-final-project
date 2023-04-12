@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Feedback;
+use App\Form\FeedbackFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SellerRepository;
+use App\Service\FeedbackService;
 use App\ServiceInterface\SettingServiceInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -77,15 +80,29 @@ class CatalogController extends AbstractController
     }
 
     #[Route('/catalog/details/{id}', name: 'app_product_details')]
-    public function productDetail($id)
+    public function productDetail($id, Request $request, FeedbackService $feedbackService)
     {
+        $productCacheLifetime = $this->settingService->get('app.product_cache_lifetime');
         $product = $this->productRepository->findProduct($id);
         $sellers = $this->sellerRepository->findByProductId($id);
+
+        $feedback = new Feedback();
+        $feedbackForm = $this->createForm(FeedbackFormType::class, $feedback, [
+            'attr' => ['class' => 'form'],
+        ]);
+        $feedbackForm->handleRequest($request);
+
+        if ($feedbackForm->isSubmitted() && $feedbackForm->isValid()) {
+            /** @var Feedback $feedbackData */
+            $feedbackData = $feedbackForm->getData();
+            $feedbackService->addFeedback($feedbackData, $product);
+        }
 
         return $this->render('pages/details.html.twig', [
             'product' => $product,
             'sellers' => $sellers,
-        ]);
+            'feedbackForm' => $feedbackForm,
+        ])->setSharedMaxAge($productCacheLifetime);
     }
 
     public function category()

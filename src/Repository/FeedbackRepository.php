@@ -39,6 +39,17 @@ class FeedbackRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByProductId($id)
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.Product = :id')
+            ->setParameter('id', $id)
+            ->orderBy('f.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Feedback[] Returns an array of Feedback objects
 //     */

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Детальная страница товара{% endblock %}
+{% block title %}Детальная страница товара {{ product.title }}{% endblock %}
 
 {% block content %}
     <div class="Middle Middle_top">
@@ -25,18 +25,13 @@
                                 <h2 class="ProductCard-title">{{ product.title }}</h2>
                                 <div class="ProductCard-info">
                                     <div class="ProductCard-cost">
-                                        <div class="ProductCard-price">$55.00</div>
-                                        <div class="ProductCard-priceOld">$115.00</div>
+                                        <div class="ProductCard-price">${{ product.prices.getValues() | average_price }}</div>
                                     </div>
                                     <div class="ProductCard-compare"><a class="btn btn_default" href="#"><img class="btn-icon" src="{{ asset('images/icons/card/change.svg') }}" alt="change.svg"/></a></div>
                                 </div>
                             </div>
                             <div class="ProductCard-text">
-                                <ul>
-                                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmod</li>
-                                    <li>tempor incididunt ut labore et dolore magna aliqua. Lorem</li>
-                                    <li>ipsum dolor sit ameabore et dolore magna aliqua. Lorem ipsum</li>
-                                </ul>
+                                {{ product.shortDescription }}
                             </div>
                             <div class="ProductCard-cart">
                                 <div class="ProductCard-cartElement ProductCard-cartElement_amount">
@@ -62,7 +57,7 @@
                             <div class="Tabs-block" id="description">
                                 <h2>{{ product.title }}
                                 </h2>
-                                <p>{{ product.shortDescription }}</p><img class="pict pict_right" src="{{ asset('images/content/home/bigGoods.png') }}" alt="bigGoods.png"/>
+                                <p>{{ product.description }}</p><img class="pict pict_right" src="{{ asset('images/content/home/bigGoods.png') }}" alt="bigGoods.png"/>
                                 <div class="clearfix">
                                 </div>
                                 <div class="table">
@@ -83,7 +78,6 @@
                             <div class="Tabs-block" id="sellers">
                                 <div class="Categories Categories_product">
                                     {% for seller in sellers %}
-
                                         <div class="Categories-row">
                                             <div class="Categories-block Categories-block_info">
                                                 <div class="Categories-info">
@@ -132,24 +126,32 @@
                                 </header>
                                 <div class="Tabs-addComment">
                                     {% if app.user %}
-                                        <form class="form" action="#" method="post">
-                                            <div class="form-group">
-                                                <textarea class="form-textarea" name="review" id="review" placeholder="Ваш комментарий..."></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="row-block">
-                                                        <input class="form-input" id="name" name="name" type="text" placeholder="Ваше Имя"/>
-                                                    </div>
-                                                    <div class="row-block">
-                                                        <input class="form-input" id="email" name="email" type="text" placeholder="Ваш Email"/>
-                                                    </div>
+                                        {{ form_start(feedbackForm) }}
+                                        <div class="form-group">
+                                            {{ form_row(feedbackForm.body) }}
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="row-block">
+                                                    {{ form_row(feedbackForm.name,
+                                                        {attr: {
+                                                            value: app.user.name | default(false),
+                                                        } })
+                                                    }}
+                                                </div>
+                                                <div class="row-block">
+                                                    {{ form_row(feedbackForm.email,
+                                                        {attr: {
+                                                            value: app.user.email | default(false),
+                                                        } })
+                                                    }}
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <button class="btn btn_muted" type="submit">Оставить отзыв</button>
-                                            </div>
-                                        </form>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn_muted" type="submit">Оставить отзыв</button>
+                                        </div>
+                                        {{ form_end(feedbackForm) }}
                                     {% else %}
                                         <p>Для того, чтобы оставлять комментарии, необходимо <a href="{{ path('app_register') }}">зарегистрироваться</a></p>
                                     {% endif %}

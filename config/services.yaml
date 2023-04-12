@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     app.category_cache_lifetime: '%env(CATEGORY_CACHE_LIFETIME)%'
+    app.product_cache_lifetime: '%env(PRODUCT_CACHE_LIFETIME)%'
     app.banner_cache_lifetime: '%env(BANNER_CACHE_LIFETIME)%'
 
 services:
