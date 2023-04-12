@@ -7,6 +7,7 @@
 4. php bin/console doctrine:database:create
 5. php bin/console doctrine:migrations:migrate
 6. php bin/console doctrine:fixtures:load
+7. Сконфигурировать .env
 
 Основные разделы:
 1. Главная - /homepage
